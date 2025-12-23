@@ -8,9 +8,9 @@ const ADS_CONFIG = {
     },
     // 右側バナーの設定
     right: {
-        imageUrl: "https://placehold.jp/24/1e293b/ffffff/320x1200.png?text=Ad%20Banner%0ARight",
-        linkUrl: "https://record.discasinoaffiliates.com/_R757TaLb9LkdIqIeVhNpQ2Nd7ZgqdRLk/1/?pg=0",
-        altText: "広告バナー（右）"
+        imageUrl: "/calro.png",
+        linkUrl: "https://x.com/calro_shorts",
+        altText: "お問い合わせは（@calro_shorts）こちら"
     }
 };
 
