@@ -1,0 +1,33 @@
+{
+  "name": "増殖の庭：生物進化シミュレーション - 戦略的生存競争ゲーム",
+  "short_name": "増殖の庭",
+  "description": "4つの血統が支配権を争う、戦略的生物進化シミュレーター。筋力・論理・機動を鍛え、過酷な生存競争を勝ち抜き、第10階位の進化を目指せ。",
+  "categories": ["games", "strategy", "simulation"],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#2dd4bf",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "進化と戦争の庭園"
+    }
+  ]
+}

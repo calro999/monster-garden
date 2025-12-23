@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>増殖の庭 Evolution Garden DX | 戦略的生物進化シミュレーション</title>
+    <meta name="description" content="四つの血統が支配権を争う、戦略的生物進化シミュレーター。筋力・演算・機動を研鑽し、過酷な生存競争を勝ち抜き、第10階位の進化を目指せ。">
+    <meta name="keywords" content="増殖の庭,進化シミュレーション,戦略ゲーム,ブラウザゲーム,PWA,放置ゲーム,生物育成">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2dd4bf">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "増殖の庭 Evolution Garden DX",
+      "operatingSystem": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="info.css">
+    <script src="ads-config.js"></script>
+
+    <style>
+        /* 根幹設定 */
+        html, body {
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            display: block !important;
+            margin: 0; padding: 0;
+            background-color: #1a1c1e;
+        }
+
+        /* バナー配置の修正（高さを250pxに引き上げ） */
+        .side-ad {
+            position: fixed;
+            top: 130px; /* 前回の300pxから引き上げ */
+            height: 62px;        /* ★2. 高さ：ここを指定すると「長すぎる」のを防げます */
+            display: none;
+            z-index: 9999;
+            overflow: hidden;     /* はみ出し防止 */
+        }
+
+        @media (min-width: 1280px) {
+            .side-ad { display: block; }
+            /* 余白の中央に配置する計算式 */
+            #ad-side-left { 
+                left: calc((50% - 600px) / 2 - 80px); 
+            }
+            #ad-side-right { 
+                right: calc((50% - 600px) / 2 - 80px); 
+            }
+        }
+
+        .game-screen-wrapper {
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .territory-stats {
+            display: flex;
+            width: 100%;
+            height: 24px;
+            background: #0f172a;
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 24px;
+            color: #fff;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .stat-bar { 
+            height: 100%; 
+            transition: width 1.5s ease; 
+            text-align: center;
+            white-space: nowrap;
+        }
+        .stat-bar.red { background: #ef4444; }
+        .stat-bar.blue { background: #3b82f6; }
+        .stat-bar.green { background: #22c55e; }
+        .stat-bar.yellow { background: #eab308; }
+
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 5px 10px;
+            min-height: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .status-header {
+            width: 100% !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            justify-content: space-around;
+            padding: 10px 0;
+            margin-bottom: 8px;
+            background: #0f172a;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        #garden-frame {
+            flex: 1 !important;
+            min-height: 0 !important;
+            margin-bottom: 8px !important;
+            position: relative;
+            background: #334155;
+            border: 8px solid #0f172a;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .game-intro-section {
+            padding-top: 40px !important;
+            background: #1a1c1e;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ad-side-left" class="side-ad"></div>
+    <div id="ad-side-right" class="side-ad"></div>
+
+    <div class="game-screen-wrapper">
+        <nav class="navbar">
+            <div class="nav-left"><h1 class="logo">Evolution Garden DX</h1></div>
+            <div class="nav-right">
+                <button class="nav-btn" onclick="openDex()">📖 図鑑</button>
+                <button class="nav-btn" onclick="openMissions()">🏆 指標</button>
+                <button class="nav-btn btn-hint" onclick="showHint()">💡 概要</button>
+                <button class="nav-btn btn-reset" onclick="restartGame()">🔄</button>
+            </div>
+        </nav>
+
+        <div class="territory-stats">
+            <div id="bar-red" class="stat-bar red" style="width: 25%;">赤: 25%</div>
+            <div id="bar-blue" class="stat-bar blue" style="width: 25%;">青: 25%</div>
+            <div id="bar-green" class="stat-bar green" style="width: 25%;">緑: 25%</div>
+            <div id="bar-yellow" class="stat-bar yellow" style="width: 25%;">黄: 25%</div>
+        </div>
+
+        <main class="game-container">
+            <div class="status-header">
+                <div>行動権: <span id="act-count">5</span> / 5</div>
+                <div>境界紛争まで: <span id="next-war">30</span>s</div>
+            </div>
+
+            <div id="garden-frame">
+                <div id="z-red" class="zone red"></div>
+                <div id="z-blue" class="zone blue"></div>
+                <div id="z-green" class="zone green"></div>
+                <div id="z-yellow" class="zone yellow"></div>
+                <div id="war-overlay" class="war-overlay">境界紛争勃発</div>
+                <div id="monster-layer"></div>
+            </div>
+
+            <div class="action-bar">
+                <button class="action-btn feed" onclick="feed()">🧬 クローン生成</button>
+                <button class="action-btn" onclick="boost('atk')">⚔️ 攻撃研鑽</button>
+                <button class="action-btn" onclick="boost('int')">📘 論理拡張</button>
+                <button class="action-btn" onclick="boost('agi')">⚡ 機動向上</button>
+            </div>
+
+            <div id="panels"></div>
+        </main>
+    </div>
+
+    <section class="game-intro-section">
+        <div class="intro-content">
+            <h2 class="intro-title">静寂なる庭園で、生命の均衡を制御せよ</h2>
+            <p class="intro-lead">『Evolution Garden DX』は、四つの勢力が共生する神秘の庭園を舞台にした、戦略的リアルタイム進化シミュレーターです。</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🧬</span>
+                    <h3>生存と進化の系統</h3>
+                    <p>筋力・論理・機動。三つのステータスを研鑽し、過酷な環境に適応させよ。第10階位への到達は、選ばれた観測者のみに許されます。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚖️</span>
+                    <h3>タクティカル・バランス</h3>
+                    <p>一勢力の突出は、他勢力による「連合」を招く。支配と均衡の狭間で、リソースを最適化する戦略的判断が問われます。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📡</span>
+                    <h3>リアルタイム環境分析</h3>
+                    <p>支配率30%を超えた時、マナは枯渇し成長は鈍化する。絶えず変化する勢力図を読み解き、適切な介入を行ってください。</p>
+                </div>
+            </div>
+
+            <div class="detailed-info">
+                <h3>Garden System Dynamics</h3>
+                <p>独自のアルゴリズムに基づく領土システムにより、庭園の境界線は常に流動しています。境界紛争の結果、敗北した個体は淘汰され、勝者はその版図を広げます。この庭園は、静かなる生存競争の場です。</p>
+                <div class="seo-keywords">
+                    <span>#進化シミュレーター</span> <span>#ブラウザゲーム</span> <span>#戦略育成</span> <span>#タクティカル</span> <span>#生存競争</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="dex-modal" class="modal" onclick="closeDex()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeDex()">&times;</span>
+            <h2 class="modal-title">生命進化系統図</h2>
+            <div class="table-wrapper"><table class="dex-table"><tbody id="dex-body"></tbody></table></div>
+        </div>
+    </div>
+
+    <div id="missions-modal" class="modal" onclick="closeMissions()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeMissions()">&times;</span>
+            <h2 class="modal-title">現行の観測指標</h2>
+            <ul id="missions-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

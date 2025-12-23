@@ -1,0 +1,88 @@
+/* 紹介セクション用スタイル */
+.game-intro-section {
+    background: linear-gradient(180deg, #1a1c1e 0%, #2c3e50 100%);
+    color: #e0e0e0;
+    padding: 100px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.8;
+}
+
+.intro-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.intro-title {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #ef4444, #eab308, #22c55e, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.intro-lead {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+    margin-bottom: 60px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.detailed-info {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 15px 15px 0;
+}
+
+.seo-keywords {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.seo-keywords span {
+    font-size: 0.8rem;
+    background: #34495e;
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: #95a5a6;
+}
+
+/* スクロールを許可するための修正 */
+body {
+    overflow-y: auto !important; /* ゲーム画面でhiddenにしていた場合は解除 */
+}

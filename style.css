@@ -1,0 +1,48 @@
+:root { --bg: #f1f5f9; }
+body { margin: 0; padding: 0; font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); height: 100vh; overflow: hidden; display: flex; flex-direction: column; color: #1e293b; }
+
+.navbar { height: 60px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; }
+.logo { color: #16a34a; font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+.nav-btn { padding: 8px 14px; border: none; border-radius: 6px; background: #f1f5f9; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
+.nav-btn:hover { background: #e2e8f0; }
+
+.status-header { display: flex; justify-content: space-around; width: 100%; padding: 10px; background: #0f172a; color: #94a3b8; font-size: 12px; font-weight: bold; }
+#act-count, #next-war { color: #f8fafc; font-size: 14px; }
+
+.game-container { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px; box-sizing: border-box; }
+
+#garden-frame { 
+    width: 100%; max-width: 900px; flex: 1; background: #334155; border: 10px solid #0f172a; border-radius: 24px; position: relative; overflow: hidden; margin-bottom: 12px;
+}
+.zone { position: absolute; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.zone.red { background: #fecaca; } .zone.blue { background: #bae6fd; } .zone.green { background: #bbf7d0; } .zone.yellow { background: #fef08a; }
+
+.monster { position: absolute; width: 26px; height: 26px; background: currentColor; display: flex; justify-content: center; align-items: center; transition: left 2.1s ease-in-out, top 2.1s ease-in-out; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); pointer-events: auto; }
+.monster::after { content: "● ●"; font-size: 6px; color: rgba(255,255,255,0.7); position: absolute; top: 5px; }
+
+/* 形状定義 */
+.shape-0 { border-radius: 4px; } .shape-1 { border-radius: 50% 50% 0 0; } .shape-2 { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+.shape-3 { transform: rotate(45deg); } .shape-4 { border-radius: 50%; } .shape-5 { border: 2px solid white; box-sizing: border-box; }
+.shape-6 { border-radius: 10% 40%; } .shape-7 { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); } 
+.shape-8 { box-shadow: 0 0 15px white; scale: 1.2; } .shape-9 { border-radius: 50%; animation: pulse 1s infinite alternate; box-shadow: 0 0 20px currentColor; }
+@keyframes pulse { from { opacity: 0.7; transform: scale(1.1); } to { opacity: 1; transform: scale(1.3); } }
+
+.action-bar { display: flex; gap: 10px; margin-bottom: 10px; width: 100%; max-width: 900px; }
+.action-btn { flex: 1; padding: 14px; border: none; border-radius: 12px; background: #1e293b; color: white; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.2s; }
+.action-btn.feed { background: #ea580c; }
+.action-btn:active { transform: scale(0.95); }
+
+#panels { width: 100%; max-width: 900px; height: 160px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.panel { background: white; border-radius: 16px; padding: 12px; border-bottom: 5px solid #cbd5e1; cursor: pointer; transition: 0.3s; overflow: hidden; }
+.panel.selected { border-color: #22c55e; background: #f0fdf4; transform: translateY(-4px); }
+.log-display { font-size: 10px; color: #64748b; margin-top: 6px; height: 85px; overflow-y: auto; border-top: 1px solid #f1f5f9; line-height: 1.5; }
+
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
+.modal-content { background: white; padding: 25px; border-radius: 24px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; }
+.war-overlay { position: absolute; inset: 0; background: rgba(220, 38, 38, 0.4); display: flex; justify-content: center; align-items: center; color: white; font-size: 40px; font-weight: 900; opacity: 0; z-index: 100; pointer-events: none; transition: 0.5s; letter-spacing: 4px; }
+.war-overlay.active { opacity: 1; }
+.buff-notice { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: #22c55e; color: white; padding: 12px 24px; border-radius: 40px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: none; z-index: 2000; }
+
+.dex-table { width: 100%; border-collapse: collapse; }
+.dex-table td { padding: 15px; border-bottom: 1px solid #eee; }
+.censored { color: #ccc; }
