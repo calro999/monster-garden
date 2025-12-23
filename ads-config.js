@@ -2,7 +2,7 @@
 const ADS_CONFIG = {
     // 左側バナーの設定
     left: {
-        imageUrl: "/golden-panda.png", // 160x600推奨
+        imageUrl: "/golden-panda300.png", // 160x600推奨
         linkUrl: "https://record.discasinoaffiliates.com/_R757TaLb9LkdIqIeVhNpQ2Nd7ZgqdRLk/1/?pg=0",
         altText: "Golden Pandaでお試しプレイ！"
     },
