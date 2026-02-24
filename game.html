@@ -17,8 +17,8 @@
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1400164447922520"
-    crossorigin="anonymous"></script>
+    <!-- GD SDK -->
+    <script src="gd-sdk.js"></script>
     <meta name="google-site-verification" content="DkCMrOjpxPVzY0T8G34bKQQDsDP9Biu83kk2wfz5hz4" />
      <script type="application/ld+json">
     {
@@ -46,26 +46,7 @@
             background-color: #1a1c1e;
         }
 
-        /* バナー配置の修正（高さを250pxに引き上げ） */
-        .side-ad {
-            position: fixed;
-            top: 100px; /* 前回の300pxから引き上げ */
-            height: 600px;        /* ★2. 高さ：ここを指定すると「長すぎる」のを防げます */
-            display: none;
-            z-index: 9999;
-            overflow: hidden;     /* はみ出し防止 */
-        }
 
-        @media (min-width: 1280px) {
-            .side-ad { display: block; }
-            /* 余白の中央に配置する計算式 */
-            #ad-side-left { 
-                left: calc((50% - 600px) / 2 - 80px); 
-            }
-            #ad-side-right { 
-                right: calc((50% - 600px) / 2 - 80px); 
-            }
-        }
 
         .game-screen-wrapper {
             width: 100%;
@@ -194,8 +175,7 @@
 </head>
 <body>
 
-    <div id="ad-side-left" class="side-ad"></div>
-    <div id="ad-side-right" class="side-ad"></div>
+
 
     <div class="game-screen-wrapper">
         <nav class="navbar">
